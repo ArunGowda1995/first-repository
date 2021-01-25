@@ -4,7 +4,8 @@ const { connect } = require("mongoose");
 const cors = require("cors");
 const { success, error } = require("consola");
 const { DB, PORT } = require("./config");
-
+const MONGO_DB_URL =
+"mongodb+srv://apitesting:apitesting@cluster0.z38n2.mongodb.net/apitesting?retryWrites=true&w=majority"
 /*------------------------initialize express app----------------------------*/
 const app = express();
 
@@ -24,15 +25,18 @@ app.use("/posts", posts);
 
 let startApp = async () => {
   try {
-    await connect(DB, {
+    await connect(MONGO_DB_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useFindAndModify: true,
     });
     success({
-      message: `successfully Database connected ${DB}`,
+      message: `successfully Database connected ${MONGO_DB_URL}`,
+
       badge: true,
     });
+    const PORT=5000;
+
     //listen port
     app.listen(PORT, (err) => {
       if (err) {
@@ -41,7 +45,7 @@ let startApp = async () => {
       success({ message: `Server is running on ${PORT}`, badge: true });
     });
   } catch (err) {
-    error({ message: `unable to connect database ${DB}`, badge: true });
+    error({ message: `unable to connect database ${MONGO_DB_URL}`, badge: true });
   }
 };
 startApp();
