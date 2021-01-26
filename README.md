@@ -1,2 +1,2 @@
-# first-repository
-API testing with postman
+# api_testing_with_postman
+we are testing restfull api
